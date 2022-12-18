@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CodeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/logout', function() {
+    \Illuminate\Support\Facades\Auth::logout();
+})->middleware(['auth']);
+
+Route::get('/create', [CodeController::class, 'create'])->middleware(['auth']);
+Route::post('/create', [CodeController::class, 'store'])->middleware(['auth']);
+Route::get('/{code}', [CodeController::class, 'view']);
+Route::post('/{code}', [CodeController::class, 'update'])->middleware(['auth']);
+
+
