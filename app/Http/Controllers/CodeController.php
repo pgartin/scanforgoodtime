@@ -15,16 +15,23 @@ class CodeController extends Controller
 {
     public function view(Code $code)
     {
-        if ($code->type == Code::REDIRECT && !Auth::check()) {
+        if ($code->type == Code::REDIRECT && (!Auth::check() || !auth()->user()->isAdmin())) {
             return redirect($code->content);
         }
         return view('code', ['code' => $code]);
     }
 
+    public function list(Code $code)
+    {
+        if ($code->type == Code::REDIRECT && (!Auth::check() || !auth()->user()->isAdmin())) {
+            return redirect($code->content);
+        }
+        return response(['code' => Code::get()]);
+    }
+
     public function update(Code $code, Request $request): RedirectResponse
     {
         $code->update(Arr::only($request->all(), ['name', 'type', 'content']));
-
         return redirect()->back();
     }
 
