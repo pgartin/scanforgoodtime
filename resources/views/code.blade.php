@@ -13,8 +13,8 @@
 @endsection
 
 @section('content')
-    @if(\Illuminate\Support\Facades\Auth::check())
-        <form method="POST" action="">
+    @if(auth()->user()->canUpdate($code))
+        <form method="POST" action="{{ route('codes.update', $code) }}">
             @csrf
 
             <div class="row mb-3">
@@ -45,8 +45,6 @@
                 </div>
             </div>
 
-
-
             <div class="row mb-0">
                 <div class="col-md-8 offset-md-4">
                     <button type="submit" class="btn btn-primary">
@@ -59,7 +57,7 @@
     @if($code)
         @if($code->type == \App\Models\Code::IMAGE)
             <div>
-                <img src="{{$code->content}}}" style="width: 100%">
+                <img src="{{$code->content}}" style="width: 100%">
             </div>
         @elseif($code->type == \App\Models\Code::REDIRECT)
             <div style="padding: 50px;">

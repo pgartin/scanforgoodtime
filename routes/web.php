@@ -25,10 +25,10 @@ Route::get('/logout', function() {
     Auth::logout();
 })->middleware(['auth']);
 
-Route::get('/code/create', [CodeController::class, 'create'])->middleware(['auth']);
-Route::post('/code/create', [CodeController::class, 'store'])->middleware(['auth']);
-Route::get('/codes', [CodeController::class, 'list'])->middleware(['auth']);
-Route::get('codes/{code}', [CodeController::class, 'view']);
-Route::post('codes/{code}', [CodeController::class, 'update'])->middleware(['auth']);
+Route::get('/codes/create', [CodeController::class, 'create'])->name('codes.create')->middleware(['auth']);
+Route::post('/codes/create', [CodeController::class, 'store'])->name('codes.store')->middleware(['auth']);
+Route::get('/codes', [CodeController::class, 'list'])->name('codes.list')->middleware(['auth']);
+Route::get('codes/{code}', [CodeController::class, 'view'])->name('codes.view');
+Route::post('codes/{code}', [CodeController::class, 'update'])->name('codes.update')->middleware(['auth']);
 
 

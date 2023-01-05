@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -41,7 +42,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return HasMany
+     */
+    public function codes(): HasMany
+    {
+        return $this->hasMany(Code::class);
+    }
+
     public function isAdmin():bool {
-        return $this->email == "petergartin180@gmail.com";
+        return $this->email === config('admin.email');
+    }
+
+    public function canCreate():bool {
+        return $this->isAdmin() || $this->codes()->count() < 20;
+    }
+
+    public function canUpdate(Code $code):bool {
+        return $this->isAdmin() || $code->user_id === $this->id;
     }
 }

@@ -13,8 +13,8 @@
 @endsection
 
 @section('content')
-    <div>
-        <form method="POST" action="/create">
+    <div style="padding-left: 15px; padding-right: 15px">
+        <form method="POST" action="{{ route('codes.store') }}">
             @csrf
 
             <div class="row mb-3">
@@ -63,5 +63,14 @@
                 </div>
             </div>
         </form>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
 @endsection

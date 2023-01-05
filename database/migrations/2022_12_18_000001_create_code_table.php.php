@@ -18,17 +18,11 @@ return new class extends Migration
             $table->id();
             $table->integer('code')->unique();
             $table->string('name');
-            $table->string('content');
+            $table->text('content');
             $table->integer('type');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
-
-        Code::create([
-            'code' => 8764,
-            'name' => 'First',
-            'content' => 'https://m.media-amazon.com/images/M/MV5BNDM5MmY0ZDgtYjk2Yy00ZTIxLWI4YWQtNmEyM2NkYjMzY2RhXkEyXkFqcGdeQXVyMTUzNjUyNTcz._V1_.jpg',
-            'type' => Code::IMAGE,
-        ]);
     }
 
     /**
